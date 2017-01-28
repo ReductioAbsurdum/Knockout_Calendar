@@ -1,0 +1,10 @@
+{
+  "name": "calendarApp",
+  "version": "0.0.1",
+  "description": "calendarApp to learn knockout.js",
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-coffee": "^2.3.3",
+    "gulp-util": "^3.0.8"
+  }
+}

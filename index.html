@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Ben's Calendar Project</title>
+    <link rel="stylesheet" href="css/styles.css" type="text/css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.1/knockout-debug.js"></script>
+</head>
+
+<body>
+    <div class="calendarOverhead">
+        <h1>Knockout.js Calendar <br/> &amp; CoffeeScript</h1>
+        <div class="calendar">
+          <span>
+            <button type="button" data-bind="click: buttonLeft"><</button>
+            <button type="button" data-bind="click: buttonRight">></button>
+          </span>
+            <h3 id="monthName" data-bind="text: presentMonthYear"></h3>
+            <div class="chart">
+                <table id="table">
+                  <tr data-bind="foreach: days">
+                    <th data-bind="text: $data"></th>
+                  </tr>
+                  <tbody data-bind="foreach: monthTableData"> <!--roll through individual days array-->
+                      <tr data-bind="foreach: $data"> <!-- roll through sub arrays for each week -->
+                        <td data-bind="click: $root.newSelectedDayUpdate, css: { none: $data.getMonth() !== $root.date().getMonth()}">
+                          <p data-bind="text: $data.getDate(), css: {selectedDay: $root.compareDaytoDate($data)}"></p> <!-- text: individual day-->
+                          <p class="bullets" data-bind="html: $root.isEvent($data)"></p> <!-- data-bind html = function {compare $data.getDate() to event list, return built string of spans and &bull; put inline style element inside span tag with correlating color}-->
+                        </td>
+                      </tr>
+                  </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="control">
+          <form data-bind="submit: submitDayFunction">
+            <label for="Month"><input type="text" name="month" placeholder="Month"></label>
+            <label for="Day"><input type="text" name="day" placeholder="Day"></label>
+            <label for="Year"><input type="text" name="year" placeholder="Year"></label>
+            <button type="submit">Submit</button>
+          </form>
+        </div>
+        <div class="selectedDatePresentation" data-bind="text: formattedDay">
+        </div>
+    </div> <!--end of calendarOverhead-->
+
+    <div class="eventsOverhead">
+      <h1>Add Event!</h1>
+      <form data-bind="submit: submitEventFunction">
+        <h4>Add event to: <input type="date" name="eventDay"></h4>
+        <label for="color">Add color to date: <input type="color" name="color" value="#208ec4"></label><br/>
+        <button type="submit">Submit Event</button>
+      </form>
+      <div class="eventList">
+        <h2>Event List:</h2>
+        <ul data-bind="foreach: eventList">
+          <li data-bind="text: $data.formattedDate, style: {backgroundColor: $data.color}"></li>
+        </ul>
+      </div>
+    </div>
+
+    <script src="components/script/script.js" type="text/javascript"></script>
+</body>
+
+</html>
